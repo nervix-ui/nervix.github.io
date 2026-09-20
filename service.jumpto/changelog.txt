@@ -1,3 +1,5 @@
+[B]v1.0.5[/B]
+- overlay better look
 [B]v1.0.4[/B]
 - icon added
 [B]v1.0.3[/B]
