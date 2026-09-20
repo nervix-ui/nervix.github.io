@@ -33,18 +33,55 @@
     "show": "Les Soprano",
     "season": 4,
     "episode": "1-13",
-    "intro_length": 94
+    "intro_length": 95
   },
   {
-    "show": "The Sopranos",
-    "season": 1,
+    "show": "Les Soprano",
+    "season": 5,
     "episode": "1-13",
-    "intro_length": 94
+    "intro_length": 95
+  },
+  {
+    "show": "Les Soprano",
+    "season": 6,
+    "episode": "1-13",
+    "intro_length": 95
   },
   {
     "show": "The Soprano",
     "season": 1,
     "episode": "1-13",
     "intro_length": 94
+  },
+  {
+    "show": "The Soprano",
+    "season": 2,
+    "episode": "1-13",
+    "intro_length": 94
+  },
+  {
+    "show": "The Soprano",
+    "season": 3,
+    "episode": "1-13",
+    "intro_length": 94
+  },
+  {
+    "show": "The Soprano",
+    "season": 4,
+    "episode": "1-13",
+    "intro_length": 95
+  },
+  {
+    "show": "The Soprano",
+    "season": 5,
+    "episode": "1-13",
+    "intro_length": 95
+  },
+  {
+    "show": "The Soprano",
+    "season": 6,
+    "episode": "1-13",
+    "intro_length": 95
   }
+  
 ]
