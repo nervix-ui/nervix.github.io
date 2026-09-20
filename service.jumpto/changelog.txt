@@ -1,0 +1,5 @@
+[B]v1.0.3[/B]
+- One entry for a season
+- Better start detection
+[B]v1.0.2[/B]
+- More verbose

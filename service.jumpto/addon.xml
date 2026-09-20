@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="service.jumpto" 
+       name="JumpTo Intro" 
+       version="1.0.3" 
+       provider-name="Nervix">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="fr">Bouton pour sauter le générique d'intro</summary>
+        <description lang="fr">Saut automatique/manuel basé sur un fichier JSON distant.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
