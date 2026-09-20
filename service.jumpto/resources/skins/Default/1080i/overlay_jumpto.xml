@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <controls>
+        <control type="group">
+            <visible>Player.HasVideo</visible>
+            
+            <!-- Bouton en bas à gauche -->
+            <control type="button" id="3001">
+                <left>50</left>
+                <top>950</top>
+                <width>320</width>
+                <height>70</height>
+                <label>Sauter l'intro [ENTER]</label>
+                <font>font13</font>
+                <textcolor>FFFFFFFF</textcolor>
+                <focusedcolor>FF00FF00</focusedcolor>
+                <texturefocus border="5">button-focus.png</texturefocus>
+                <texturenofocus border="5">button-nofocus.png</texturenofocus>
+                <align>center</align>
+                <aligny>center</aligny>
+            </control>
+        </control>
+    </controls>
+</window>

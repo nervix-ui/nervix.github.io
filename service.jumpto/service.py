@@ -1,9 +1,35 @@
+
 import json
 import urllib.request
 import xbmc
 import xbmcgui
 
 JSON_URL = "https://raw.githubusercontent.com/nervix-ui/nervix.github.io/refs/heads/master/intros.json"
+ADDON_ID = "service.jumpto"
+
+class JumpOverlay(xbmcgui.WindowXMLDialog):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.jump_requested = False
+
+    def onInit(self):
+        # Donne le focus au bouton dès l'affichage
+        self.setFocusId(3001)
+
+    def onClick(self, control_id):
+        if control_id == 3001:
+            self.jump_requested = True
+            self.close()
+
+    def Action(self, action):
+        # 7 = Touche SELECT / ENTER de la télécommande ou du clavier
+        if action.getId() == 7:
+            self.jump_requested = True
+            self.close()
+        # 92 = Touche BACK / ESCAPE
+        elif action.getId() == 92:
+            self.close()
+
 
 class JumpToPlayer(xbmc.Player):
     def __init__(self):
@@ -28,7 +54,6 @@ class JumpToPlayer(xbmc.Player):
 
         # Attente très courte pour s'assurer que les métadonnées de la vidéo sont chargées
         xbmc.sleep(500)
-
         info_tag = self.getVideoInfoTag()
         show_title = info_tag.getTVShowTitle()
         season = info_tag.getSeason()
@@ -40,7 +65,6 @@ class JumpToPlayer(xbmc.Player):
             return
 
         intro_duration = self.find_intro_duration(show_title, season, episode)
-
         if intro_duration:
             xbmc.log(f"[JumpTo] Intro trouvée : {intro_duration}s", xbmc.LOGINFO)
             self.prompt_jump(intro_duration)
@@ -48,10 +72,7 @@ class JumpToPlayer(xbmc.Player):
     def find_intro_duration(self, show, season, episode):
         """Vérifie si l'épisode correspond à une entrée du JSON."""
         for item in self.intros_data:
-            if item.get("show").lower() != show.lower():
-                continue
-            
-            if item.get("season") != season:
+            if item.get("show").lower() != show.lower() or item.get("season") != season:
                 continue
 
             ep_data = item.get("episode")
@@ -72,28 +93,40 @@ class JumpToPlayer(xbmc.Player):
                         return item.get("intro_length")
                 except ValueError:
                     pass
-
         return None
 
-    def prompt_jump(self, duration):
-        """Affiche la notification/dialogue pour sauter l'intro."""
-        dialog = xbmcgui.Dialog()
-        do_jump = dialog.yesno(
-            "JumpTo",
-            f"Passer le générique d'intro ({duration}s) ?",
-            yeslabel="Sauter",
-            nolabel="Ignorer",
-            autoclose=10000
+    def show_overlay(self, duration):
+        # Instanciation du dialogue XML
+        overlay = JumpOverlay(
+            "overlay_jumpto.xml",
+            xbmc.addDirectoryURL(ADDON_ID),
+            "Default",
+            "1080i"
         )
+        
+        # Affichage non-bloquant
+        overlay.show()
 
-        if do_jump:
-            self.seekTime(duration)
+        # Attendre 10 secondes max ou que l'utilisateur clique
+        monitor = xbmc.Monitor()
+        count = 0
+        while count < 100 and not monitor.abortRequested() and overlay.isCreated():
+            if overlay.jump_requested:
+                current_time = self.getTime()
+                self.seekTime(current_time + duration)
+                break
+            xbmc.sleep(100)  # Boucle de 100ms
+            count += 1
+
+        # Fermeture propre du bouton s'il est encore ouvert
+        if overlay.isCreated():
+            overlay.close()
+        del overlay
 
 
 if __name__ == '__main__':
     player = JumpToPlayer()
     monitor = xbmc.Monitor()
-
     while not monitor.abortRequested():
         if monitor.waitForAbort(1):
             break
