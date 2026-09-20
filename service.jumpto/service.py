@@ -3,7 +3,7 @@ import urllib.request
 import xbmc
 import xbmcgui
 
-JSON_URL = "https://raw.githubusercontent.com/nervix-ui/JumpTo/refs/heads/main/intros.json"
+JSON_URL = "https://raw.githubusercontent.com/nervix-ui/nervix.github.io/refs/heads/master/intros.json"
 
 class JumpToPlayer(xbmc.Player):
     def __init__(self):
