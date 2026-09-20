@@ -1,3 +1,5 @@
+[B]v1.0.4[/B]
+- icon added
 [B]v1.0.3[/B]
 - One entry for a season
 - Better start detection
